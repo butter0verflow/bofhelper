@@ -1,0 +1,13 @@
+1. After generating a list of badchars, goto immunity and type: '!mona modules'
+   This lists all the available modules. Choose one with all attribs set to false and which is also a part of the program (priority).
+
+2. Hex equivalent of JMP ESP is 'FFE4'
+   
+3. Search for the instruction in that module avoiding badchars:
+   !mona find -s "\xff\xe4" -m <modulename>.dll -cpb "\x00\x0a\x0d [BADCHARS]"
+
+   [+]
+   Search in all modules:
+   !mona jmp -r esp -cpb BADCHARS
+
+4. Copy the BigEndian address of the instruction and feed it to step 5 script.

